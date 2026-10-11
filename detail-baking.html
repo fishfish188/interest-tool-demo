@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FDF5EA">
+  <title>烘焙详情</title>
+</head>
+<body>
+  <script>
+    window.DETAIL_DATA = {
+      name: "烘焙",
+      category: "手作",
+      toneClass: "green",
+      icon: "assets/icon-baking.png",
+      fund: "100-300元",
+      tags: ["室内", "手作", "1.5h/次"],
+      timeline: [
+        { period: "第1周", action: "做免烤甜品", cost: "30-80元/次" },
+        { period: "第2-4周", action: "练蛋糕和曲奇", cost: "80-150元/次" },
+        { period: "第1-3月", action: "尝试面包发酵", cost: "150-300元" }
+      ],
+      gear: {
+        low: { name: "电子秤+刮刀", note: "先补齐基础工具" },
+        pro: { name: "小烤箱", note: "稳定做再入手" }
+      },
+      resources: ["烘焙新手教程", "免烤甜品合集", "材料采购清单"],
+      place: { name: "烘焙体验课", price: "¥88起", distance: "2km" }
+    };
+  </script>
+  <script src="assets/detail-page-checkin-sync.js?v=resource-thumbs-v2"></script>
+</body>
+</html>

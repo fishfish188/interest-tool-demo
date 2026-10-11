@@ -1,0 +1,6 @@
+.DS_Store
+tmp/
+
+# Local design and reference documents
+/*.md
+/*.rtf

@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FDF5EA">
+  <title>兴趣推荐结果</title>
+  <style>
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-400.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-500.ttf") format("truetype");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-600.ttf") format("truetype");
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --page: #FDF5EA;
+      --ink: #100F0F;
+      --yellow: #FCD611;
+      --label-yellow: #FDDE19;
+      --green: #CDF12D;
+      --blue: #10D8FD;
+      --card-border: 2px solid #100F0F;
+      --card-shadow: 2px 2px 0px #100F0F;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      background: var(--page);
+      color: var(--ink);
+      font-family: "JiangChengYuanTi", YouYuan, "幼圆", "Microsoft YaHei", sans-serif;
+      letter-spacing: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    button {
+      color: inherit;
+      font: inherit;
+      border: 0;
+      background: none;
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .result-page {
+      position: relative;
+      width: 430px;
+      height: 932px;
+      flex: 0 0 430px;
+      overflow: hidden;
+      transform-origin: top center;
+    }
+
+    .back-link {
+      position: absolute;
+      left: 16px;
+      top: 28px;
+      width: 92px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 40px;
+      z-index: 2;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .back-link img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    .back-link span {
+      height: 18px;
+      line-height: 18px;
+    }
+
+    .back-link:active,
+    .recommend-card:active,
+    .add-button:active,
+    .result-button:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0 0 0 #100F0F;
+    }
+
+    .result-sparkles-left,
+    .result-sparkles-right {
+      position: absolute;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .result-sparkles-left {
+      width: 63px;
+      height: 63px;
+      left: 92px;
+      top: 80px;
+    }
+
+    .result-sparkles-right {
+      width: 51px;
+      height: 51px;
+      left: 275px;
+      top: 86px;
+      transform: rotate(180deg);
+    }
+
+    .result-title {
+      position: absolute;
+      width: 120px;
+      height: 30px;
+      left: 155px;
+      top: 97px;
+      font-weight: 600;
+      font-size: 30px;
+      line-height: 30px;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .result-line {
+      position: absolute;
+      width: 120px;
+      height: 10px;
+      left: 155px;
+      top: 122px;
+      background: var(--yellow);
+      border-radius: 10px;
+      z-index: 0;
+    }
+
+    .recommend-list {
+      position: absolute;
+      left: 16px;
+      top: 159px;
+      width: 398px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .recommend-card {
+      position: relative;
+      width: 398px;
+      height: 156px;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 16px;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .recommend-icon {
+      position: absolute;
+      width: 139px;
+      height: 139px;
+      left: -10px;
+      top: 6px;
+      object-fit: contain;
+    }
+
+    .recommend-name {
+      position: absolute;
+      left: 126px;
+      top: 20px;
+      height: 18px;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .best-tag {
+      position: absolute;
+      left: 168px;
+      top: 21px;
+      width: 52px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--label-yellow);
+      border-radius: 3px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 12px;
+    }
+
+    .detail-link {
+      position: absolute;
+      left: 310px;
+      top: 22px;
+      width: 72px;
+      height: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 4px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .detail-link img {
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+    }
+
+    .cost {
+      position: absolute;
+      left: 126px;
+      top: 50px;
+      height: 14px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .tag-row {
+      position: absolute;
+      left: 126px;
+      top: 72px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 16px;
+      padding: 2px 8px;
+      background: var(--label-yellow);
+      border-radius: 3px;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 12px;
+      white-space: nowrap;
+    }
+
+    .tag.green,
+    .best-tag.green {
+      background: var(--green);
+    }
+
+    .tag.blue,
+    .best-tag.blue {
+      background: var(--blue);
+    }
+
+    .add-button {
+      position: absolute;
+      width: 256px;
+      height: 36px;
+      left: 126px;
+      top: 100px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: var(--yellow);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .add-button img {
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+    }
+
+    .result-actions {
+      position: absolute;
+      left: 16px;
+      top: 691px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .result-button {
+      width: 191px;
+      height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    @media (max-width: 430px) {
+      .result-page {
+        transform: scale(calc(100vw / 430));
+      }
+
+      body {
+        height: calc(932px * (100vw / 430));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="result-page" aria-label="兴趣推荐结果">
+    <a class="back-link" href="index.html">
+      <img src="assets/icon-arrow-left-s-line.svg" alt="" aria-hidden="true">
+      <span>返回</span>
+    </a>
+
+    <img class="result-sparkles-left" src="assets/deco-sparkles.png" alt="" aria-hidden="true">
+    <img class="result-sparkles-right" src="assets/deco-sparkles.png" alt="" aria-hidden="true">
+    <div class="result-line" aria-hidden="true"></div>
+    <h1 class="result-title">为你推荐</h1>
+
+    <section class="recommend-list" aria-label="推荐兴趣">
+      <article class="recommend-card">
+        <img class="recommend-icon" src="assets/icon-climbing.png" alt="" aria-hidden="true">
+        <h2 class="recommend-name">攀岩</h2>
+        <span class="best-tag">最推荐</span>
+        <a class="detail-link" href="detail-climbing.html">
+          <span>查看详情</span>
+          <img src="assets/icon-arrow-right-s-line.svg" alt="" aria-hidden="true">
+        </a>
+        <p class="cost">启动资金：100-400元</p>
+        <div class="tag-row" aria-label="兴趣标签">
+          <span class="tag">室内/户外</span>
+          <span class="tag">无氧</span>
+          <span class="tag">1-1.5h/次</span>
+        </div>
+        <button class="add-button" type="button">
+          <img src="assets/icon-add-line.svg" alt="" aria-hidden="true">
+          <span>添加到我的清单</span>
+        </button>
+      </article>
+
+      <article class="recommend-card">
+        <img class="recommend-icon" src="assets/icon-painting.png" alt="" aria-hidden="true">
+        <h2 class="recommend-name">绘画</h2>
+        <span class="best-tag green">低成本</span>
+        <a class="detail-link" href="detail-painting.html">
+          <span>查看详情</span>
+          <img src="assets/icon-arrow-right-s-line.svg" alt="" aria-hidden="true">
+        </a>
+        <p class="cost">启动资金：0-50元</p>
+        <div class="tag-row" aria-label="兴趣标签">
+          <span class="tag green">室内</span>
+          <span class="tag green">绘画</span>
+          <span class="tag green">1h/次</span>
+        </div>
+        <button class="add-button" type="button">
+          <img src="assets/icon-add-line.svg" alt="" aria-hidden="true">
+          <span>添加到我的清单</span>
+        </button>
+      </article>
+
+      <article class="recommend-card">
+        <img class="recommend-icon" src="assets/icon-tennis.png" alt="" aria-hidden="true">
+        <h2 class="recommend-name">网球</h2>
+        <span class="best-tag blue">户外</span>
+        <a class="detail-link" href="detail-tennis.html">
+          <span>查看详情</span>
+          <img src="assets/icon-arrow-right-s-line.svg" alt="" aria-hidden="true">
+        </a>
+        <p class="cost">启动资金：200-500元</p>
+        <div class="tag-row" aria-label="兴趣标签">
+          <span class="tag blue">室外</span>
+          <span class="tag blue">有氧</span>
+          <span class="tag blue">1-1.5h/次</span>
+        </div>
+        <button class="add-button" type="button">
+          <img src="assets/icon-add-line.svg" alt="" aria-hidden="true">
+          <span>添加到我的清单</span>
+        </button>
+      </article>
+    </section>
+
+    <nav class="result-actions" aria-label="结果页操作">
+      <a class="result-button" href="quiz.html">重新测一测</a>
+      <a class="result-button" href="explore.html">进入兴趣广场</a>
+    </nav>
+  </main>
+</body>
+</html>

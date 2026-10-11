@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FDF5EA">
+  <title>简笔画详情</title>
+</head>
+<body>
+  <script>
+    window.DETAIL_DATA = {
+      name: "简笔画",
+      category: "绘画",
+      toneClass: "green",
+      icon: "assets/icon-painting.png",
+      fund: "0-50元",
+      tags: ["室内", "绘画", "1h/次"],
+      timeline: [
+        { period: "第1周", action: "每天临摹10分钟", cost: "0-20元" },
+        { period: "第2-4周", action: "练线条和构图", cost: "20-50元" },
+        { period: "第1-3月", action: "画主题小作品", cost: "50-100元" }
+      ],
+      gear: {
+        low: { name: "中性笔+白纸", note: "先用手边工具开始" },
+        pro: { name: "马克笔套装", note: "稳定输出再升级" }
+      },
+      resources: ["简笔画入门合集", "线条练习清单", "小红书手账灵感"],
+      place: { name: "附近绘画体验课", price: "¥39起", distance: "2km" }
+    };
+  </script>
+  <script src="assets/detail-page-checkin-sync.js?v=resource-thumbs-v2"></script>
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FDF5EA">
+  <title>探一探兴趣广场</title>
+  <style>
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-400.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-500.ttf") format("truetype");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-600.ttf") format("truetype");
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --page: #FDF5EA;
+      --ink: #100F0F;
+      --yellow: #FCD611;
+      --label-yellow: #FDDE19;
+      --green: #CDF12D;
+      --blue: #10D8FD;
+      --card-border: 2px solid #100F0F;
+      --card-shadow: 2px 2px 0px #100F0F;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      background: var(--page);
+      color: var(--ink);
+      font-family: "JiangChengYuanTi", YouYuan, "幼圆", "Microsoft YaHei", sans-serif;
+      letter-spacing: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    button,
+    input {
+      color: inherit;
+      font: inherit;
+      border: 0;
+      background: none;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .explore-page {
+      position: relative;
+      width: 430px;
+      height: 1450px;
+      flex: 0 0 430px;
+      overflow: hidden;
+      transform-origin: top center;
+    }
+
+    .explore-bg {
+      position: absolute;
+      width: 430px;
+      height: 185px;
+      left: 0;
+      top: 0;
+      object-fit: cover;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .back-link {
+      position: absolute;
+      left: 16px;
+      top: 28px;
+      width: 92px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 18px;
+      z-index: 3;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .back-link img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    .back-link span {
+      width: 36px;
+      height: 18px;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .brand-title {
+      display: none;
+      position: absolute;
+      width: 200px;
+      height: 40px;
+      left: 42px;
+      top: 24px;
+      font-weight: 600;
+      font-size: 40px;
+      line-height: 40px;
+      text-align: center;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .brand-subtitle {
+      display: none;
+      position: absolute;
+      width: 198px;
+      height: 18px;
+      left: 43px;
+      top: 80px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 18px;
+      text-align: center;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .title-underline {
+      display: none;
+      position: absolute;
+      width: 200.63px;
+      height: 15.4px;
+      left: 44.4px;
+      top: 57.32px;
+      object-fit: fill;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .title-sparkles {
+      display: none;
+      position: absolute;
+      object-fit: contain;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .title-sparkles-left {
+      width: 63px;
+      height: 63px;
+      left: -6px;
+      top: -3px;
+    }
+
+    .title-sparkles-right {
+      width: 50px;
+      height: 50px;
+      left: 231px;
+      top: 57px;
+      transform: rotate(14.33deg);
+    }
+
+    .top-tabs {
+      position: absolute;
+      width: 136px;
+      height: 40px;
+      left: 278px;
+      top: 28px;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 8px;
+      z-index: 3;
+    }
+
+    .top-tab {
+      position: absolute;
+      top: -2px;
+      width: 68px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .top-tab-home {
+      left: -2px;
+      background: transparent;
+    }
+
+    .top-tab-mine {
+      left: 68px;
+      background: var(--yellow);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      z-index: 1;
+    }
+
+    .search-panel {
+      position: absolute;
+      width: 398px;
+      height: 44px;
+      left: 16px;
+      top: 118px;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 12px;
+      z-index: 2;
+    }
+
+    .search-icon {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      left: 16px;
+      top: 9px;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .search-input {
+      position: absolute;
+      width: 330px;
+      height: 20px;
+      left: 48px;
+      top: 11px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 20px;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #100F0F;
+      opacity: 0.58;
+    }
+
+    .filter-row {
+      position: absolute;
+      left: 16px;
+      top: 178px;
+      display: flex;
+      gap: 16px;
+      z-index: 2;
+    }
+
+    .filter-chip {
+      width: 56px;
+      height: 30px;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 12px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      text-align: center;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .filter-chip.is-active {
+      background: var(--yellow);
+    }
+
+    .filter-chip:active,
+    .interest-tile:active,
+    .interest-add-button:active,
+    .back-link:active,
+    .top-tab:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0 0 0 #100F0F;
+    }
+
+    .interest-list {
+      position: absolute;
+      width: 398px;
+      left: 16px;
+      top: 224px;
+      display: grid;
+      gap: 16px;
+      z-index: 2;
+    }
+
+    .interest-tile {
+      position: relative;
+      width: 398px;
+      height: 156px;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 16px;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .interest-icon {
+      position: absolute;
+      width: 139px;
+      height: 139px;
+      left: -10px;
+      top: 6px;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .interest-title-row {
+      position: absolute;
+      left: 126px;
+      top: 20px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .interest-name {
+      height: 18px;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 18px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .interest-top-tag {
+      min-width: 40px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      background: var(--label-yellow);
+      border-radius: 3px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 12px;
+      white-space: nowrap;
+    }
+
+    .interest-detail-link {
+      position: absolute;
+      left: 130px;
+      top: 0;
+      width: 268px;
+      height: 76px;
+      display: block;
+    }
+
+    .interest-detail-link > span {
+      position: absolute;
+      left: 180px;
+      top: 22px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .interest-detail-link img {
+      position: absolute;
+      left: 240px;
+      top: 23px;
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+    }
+
+    .interest-cost {
+      position: absolute;
+      left: 126px;
+      top: 50px;
+      height: 14px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      white-space: nowrap;
+    }
+
+    .interest-labels {
+      position: absolute;
+      left: 126px;
+      top: 72px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .interest-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 16px;
+      padding: 2px 8px;
+      background: var(--label-yellow);
+      border-radius: 3px;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 12px;
+      white-space: nowrap;
+    }
+
+    .interest-add-button {
+      position: absolute;
+      width: 256px;
+      height: 36px;
+      left: 126px;
+      top: 100px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: var(--yellow);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .interest-add-button img {
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+    }
+
+    .interest-tile[data-tone="green"] .interest-label,
+    .interest-tile[data-tone="green"] .interest-top-tag {
+      background: var(--green);
+    }
+
+    .interest-tile[data-tone="blue"] .interest-label,
+    .interest-tile[data-tone="blue"] .interest-top-tag {
+      background: var(--blue);
+    }
+
+    .page-toast {
+      position: fixed;
+      left: 50%;
+      top: calc(50% - 15px);
+      width: max-content;
+      min-width: 78px;
+      height: 30px;
+      padding: 0 12px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(16, 15, 15, 0.7);
+      border: 1px solid rgba(16, 15, 15, 0.7);
+      border-radius: 8px;
+      z-index: 20;
+      color: #FFFFFF;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 14px;
+      text-align: center;
+      white-space: nowrap;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .page-toast[hidden] {
+      display: none;
+    }
+
+    @media (max-width: 430px) {
+      .explore-page {
+        transform: scale(calc(100vw / 430));
+      }
+
+      body {
+        height: calc(1450px * (100vw / 430));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="explore-page" aria-label="探一探兴趣广场">
+    <img class="explore-bg" src="assets/bg.png" alt="" aria-hidden="true">
+    <img class="title-sparkles title-sparkles-left" src="assets/deco-sparkles.png" alt="" aria-hidden="true">
+    <img class="title-sparkles title-sparkles-right" src="assets/deco-sparkles.png" alt="" aria-hidden="true">
+    <img class="title-underline" src="assets/line1.png" alt="" aria-hidden="true">
+    <h1 class="brand-title">兴趣探索站</h1>
+    <p class="brand-subtitle">适合打工人的低成本指南</p>
+
+    <a class="back-link" href="index.html">
+      <img src="assets/icon-arrow-left-s-line.svg" alt="" aria-hidden="true">
+      <span>返回</span>
+    </a>
+
+    <nav class="top-tabs" aria-label="顶部导航">
+      <a class="top-tab top-tab-home" href="mine.html">我的</a>
+      <a class="top-tab top-tab-mine" href="explore.html">广场</a>
+    </nav>
+
+    <label class="search-panel" aria-label="搜索兴趣">
+      <img class="search-icon" src="assets/icon-search-line.svg" alt="" aria-hidden="true">
+      <input class="search-input" type="search" placeholder="搜索兴趣" autocomplete="off">
+    </label>
+
+    <section class="filter-row" aria-label="兴趣筛选">
+      <button class="filter-chip is-active" type="button" data-filter="全部">全部</button>
+      <button class="filter-chip" type="button" data-filter="有氧">有氧</button>
+      <button class="filter-chip" type="button" data-filter="无氧">无氧</button>
+      <button class="filter-chip" type="button" data-filter="手作">手作</button>
+    </section>
+
+    <section class="interest-list" aria-label="兴趣广场列表">
+      <article class="interest-tile" data-name="攀岩" data-category="无氧" data-tone="yellow">
+        <img class="interest-icon" src="assets/icon-climbing.png" alt="" aria-hidden="true">
+        <div class="interest-title-row">
+          <h2 class="interest-name">攀岩</h2>
+          <span class="interest-top-tag">无氧</span>
+        </div>
+        <a class="interest-detail-link" href="detail-climbing.html">
+          <span>查看详情</span>
+          <img src="assets/icon-arrow-right-s-line.svg" alt="" aria-hidden="true">
+        </a>
+        <p class="interest-cost">启动资金：100-400元</p>
+        <div class="interest-labels" aria-label="兴趣标签">
+          <span class="interest-label">室内/户外</span>
+          <span class="interest-label">无氧</span>
+          <span class="interest-label">1-1.5h/次</span>
+        </div>
+        <button class="interest-add-button" type="button">
+          <img src="assets/icon-add-line.svg" alt="" aria-hidden="true">
+          <span>添加到我的清单</span>
+        </button>
+      </article>
+
+      <article class="interest-tile" data-name="简笔画" data-category="绘画" data-tone="green">
+        <img class="interest-icon" src="assets/icon-painting.png" alt="" aria-hidden="true">
+        <div class="interest-title-row">
+          <h2 class="interest-name">简笔画</h2>
+          <span class="interest-top-tag">绘画</span>
+        </div>
+        <a class="interest-detail-link" href="detail-painting.html">
+          <span>查看详情</span>
+          <img src="assets/icon-arrow-right-s-line.svg" alt="" aria-hidden="true">
+        </a>
+        <p class="interest-cost">启动资金：0-50元</p>
+        <div class="interest-labels" aria-label="兴趣标签">
+          <span class="interest-label">室内</span>
+          <span class="interest-label">绘画</span>
+          <span class="interest-label">1h/次</span>
+        </div>
+        <button class="interest-add-button" type="button">
+          <img src="assets/icon-add-line.svg" alt="" aria-hidden="true">
+          <span>添加到我的清单</span>
+        </button>
+      </article>
+
+      <article class="interest-tile" data-name="网球" data-category="有氧" data-tone="blue">
+        <img class="interest-icon" src="assets/icon-tennis.png" alt="" aria-hidden="true">
+        <div class="interest-title-row">
+          <h2 class="interest-name">网球</h2>
+          <span class="interest-top-tag">有氧</span>
+        </div>
+        <a class="interest-detail-link" href="detail-tennis.html">
+          <span>查看详情</span>
+          <img src="assets/icon-arrow-right-s-line.svg" alt="" aria-hidden="true">
+        </a>
+        <p class="interest-cost">启动资金：200-500元</p>
+        <div class="interest-labels" aria-label="兴趣标签">
+          <span class="interest-label">室外</span>
+          <span class="interest-label">有氧</span>
+          <span class="interest-label">1-1.5h/次</span>
+        </div>
+        <button class="interest-add-button" type="button">
+          <img src="assets/icon-add-line.svg" alt="" aria-hidden="true">
+          <span>添加到我的清单</span>
+        </button>
+      </article>
+
+      <article class="interest-tile" data-name="皮克球" data-category="有氧" data-tone="yellow">
+        <img class="interest-icon" src="assets/icon-pickleball.png" alt="" aria-hidden="true">
+        <div class="interest-title-row">
+          <h2 class="interest-name">皮克球</h2>
+          <span class="interest-top-tag">有氧</span>
+        </div>
+        <a class="interest-detail-link" href="detail-pickleball.html">
+          <span>查看详情</span>
+          <img src="assets/icon-arrow-right-s-line.svg" alt="" aria-hidden="true">
+        </a>
+        <p class="interest-cost">启动资金：100-300元</p>
+        <div class="interest-labels" aria-label="兴趣标签">
+          <span class="interest-label">室内/户外</span>
+          <span class="interest-label">有氧</span>
+          <span class="interest-label">1h/次</span>
+        </div>
+        <button class="interest-add-button" type="button">
+          <img src="assets/icon-add-line.svg" alt="" aria-hidden="true">
+          <span>添加到我的清单</span>
+        </button>
+      </article>
+
+      <article class="interest-tile" data-name="烘焙" data-category="手作" data-tone="green">
+        <img class="interest-icon" src="assets/icon-baking.png" alt="" aria-hidden="true">
+        <div class="interest-title-row">
+          <h2 class="interest-name">烘焙</h2>
+          <span class="interest-top-tag">手作</span>
+        </div>
+        <a class="interest-detail-link" href="detail-baking.html">
+          <span>查看详情</span>
+          <img src="assets/icon-arrow-right-s-line.svg" alt="" aria-hidden="true">
+        </a>
+        <p class="interest-cost">启动资金：100-300元</p>
+        <div class="interest-labels" aria-label="兴趣标签">
+          <span class="interest-label">室内</span>
+          <span class="interest-label">手作</span>
+          <span class="interest-label">1.5h/次</span>
+        </div>
+        <button class="interest-add-button" type="button">
+          <img src="assets/icon-add-line.svg" alt="" aria-hidden="true">
+          <span>添加到我的清单</span>
+        </button>
+      </article>
+
+      <article class="interest-tile" data-name="拳击" data-category="有氧" data-tone="blue">
+        <img class="interest-icon" src="assets/icon-boxing.png" alt="" aria-hidden="true">
+        <div class="interest-title-row">
+          <h2 class="interest-name">拳击</h2>
+          <span class="interest-top-tag">有氧</span>
+        </div>
+        <a class="interest-detail-link" href="detail-boxing.html">
+          <span>查看详情</span>
+          <img src="assets/icon-arrow-right-s-line.svg" alt="" aria-hidden="true">
+        </a>
+        <p class="interest-cost">启动资金：100-300元</p>
+        <div class="interest-labels" aria-label="兴趣标签">
+          <span class="interest-label">室内</span>
+          <span class="interest-label">有氧</span>
+          <span class="interest-label">1h/次</span>
+        </div>
+        <button class="interest-add-button" type="button">
+          <img src="assets/icon-add-line.svg" alt="" aria-hidden="true">
+          <span>添加到我的清单</span>
+        </button>
+      </article>
+
+      <article class="interest-tile" data-name="Jazz" data-category="舞蹈" data-tone="yellow">
+        <img class="interest-icon" src="assets/icon-dance.png" alt="" aria-hidden="true">
+        <div class="interest-title-row">
+          <h2 class="interest-name">Jazz</h2>
+          <span class="interest-top-tag">舞蹈</span>
+        </div>
+        <a class="interest-detail-link" href="detail-jazz.html">
+          <span>查看详情</span>
+          <img src="assets/icon-arrow-right-s-line.svg" alt="" aria-hidden="true">
+        </a>
+        <p class="interest-cost">启动资金：100-300元</p>
+        <div class="interest-labels" aria-label="兴趣标签">
+          <span class="interest-label">室内</span>
+          <span class="interest-label">舞蹈</span>
+          <span class="interest-label">1-1.5h/次</span>
+        </div>
+        <button class="interest-add-button" type="button">
+          <img src="assets/icon-add-line.svg" alt="" aria-hidden="true">
+          <span>添加到我的清单</span>
+        </button>
+      </article>
+    </section>
+    <div class="page-toast" role="status" aria-live="polite" hidden></div>
+  </main>
+
+  <script>
+    const searchInput = document.querySelector(".search-input");
+    const filterButtons = [...document.querySelectorAll(".filter-chip")];
+    const interestTiles = [...document.querySelectorAll(".interest-tile")];
+    const interestList = document.querySelector(".interest-list");
+    ["网球", "攀岩"].forEach((name) => {
+      const tile = interestTiles.find((item) => item.dataset.name === name);
+      if (tile) interestList.prepend(tile);
+    });
+    let activeFilter = "全部";
+
+    function applyFilters() {
+      const keyword = searchInput.value.trim().toLowerCase();
+
+      interestTiles.forEach((tile) => {
+        const name = tile.dataset.name.toLowerCase();
+        const category = tile.dataset.category;
+        const matchesKeyword = !keyword || name.includes(keyword) || category.includes(keyword);
+        const matchesFilter = activeFilter === "全部" || category === activeFilter;
+        tile.hidden = !(matchesKeyword && matchesFilter);
+      });
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeFilter = button.dataset.filter;
+        filterButtons.forEach((item) => item.classList.toggle("is-active", item === button));
+        applyFilters();
+      });
+    });
+
+    searchInput.addEventListener("input", applyFilters);
+
+    const pageToast = document.querySelector(".page-toast");
+
+    function showPageToast(message) {
+      pageToast.textContent = message;
+      pageToast.hidden = false;
+      window.clearTimeout(showPageToast.timer);
+      showPageToast.timer = window.setTimeout(() => {
+        pageToast.hidden = true;
+      }, 1000);
+    }
+
+    document.querySelectorAll(".interest-detail-link").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const tile = link.closest(".interest-tile");
+        if (["攀岩", "网球"].includes(tile?.dataset.name)) return;
+        event.preventDefault();
+        showPageToast("查看详情内容下一步接入");
+      });
+    });
+
+    function readSavedList() {
+      return JSON.parse(localStorage.getItem("interestSavedList") || "[]");
+    }
+
+    function writeSavedList(list) {
+      localStorage.setItem("interestSavedList", JSON.stringify(list));
+    }
+
+    document.querySelectorAll(".interest-add-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const tile = button.closest(".interest-tile");
+        const saved = readSavedList();
+        const existing = saved.find((item) => item.name === tile.dataset.name);
+
+        if (existing) {
+          existing.status = "try";
+        } else {
+          saved.push({ name: tile.dataset.name, status: "try", addedAt: Date.now() });
+        }
+
+        writeSavedList(saved);
+        localStorage.setItem(
+          "interestDeletedNames",
+          JSON.stringify(JSON.parse(localStorage.getItem("interestDeletedNames") || "[]").filter((name) => name !== tile.dataset.name))
+        );
+        showPageToast("添加成功");
+      });
+    });
+  </script>
+</body>
+</html>

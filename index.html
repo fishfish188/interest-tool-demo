@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FDF5EA">
+  <title>兴趣探索站</title>
+  <style>
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-400.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-500.ttf") format("truetype");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-600.ttf") format("truetype");
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --page: #FDF5EA;
+      --ink: #100F0F;
+      --yellow: #FCD611;
+      --green: #CDF12D;
+      --blue: #10D8FD;
+      --card-border: 2px solid #100F0F;
+      --card-shadow: 2px 2px 0px #100F0F;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      background: var(--page);
+      color: var(--ink);
+      font-family: "JiangChengYuanTi", YouYuan, "幼圆", "Microsoft YaHei", sans-serif;
+      letter-spacing: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    button {
+      color: inherit;
+      font: inherit;
+      border: 0;
+      background: none;
+      cursor: pointer;
+    }
+
+    img {
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .app {
+      position: relative;
+      width: 430px;
+      height: 932px;
+      flex: 0 0 430px;
+      overflow: hidden;
+      transform-origin: top center;
+    }
+
+    .deco-sparkles {
+      position: absolute;
+      object-fit: contain;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .deco-sparkles-2 {
+      width: 63px;
+      height: 63px;
+      left: -6px;
+      top: -3px;
+    }
+
+    .deco-sparkles-1 {
+      width: 50px;
+      height: 50px;
+      left: 231px;
+      top: 57px;
+      transform: rotate(14.33deg);
+    }
+
+    .sketch-line {
+      position: absolute;
+      display: block;
+      object-fit: fill;
+      pointer-events: none;
+    }
+
+    .line-1 {
+      width: 200.63px;
+      height: 15.4px;
+      left: 44.4px;
+      top: 57.32px;
+      z-index: 0;
+    }
+
+    .line-2 {
+      width: 203.09px;
+      height: 9.71px;
+      left: 44.06px;
+      top: 178.53px;
+      z-index: 3;
+    }
+
+    .title {
+      position: absolute;
+      width: 200px;
+      height: 40px;
+      left: 42px;
+      top: 24px;
+      font-weight: 600;
+      font-size: 40px;
+      line-height: 40px;
+      text-align: center;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .subtitle {
+      position: absolute;
+      width: 198px;
+      height: 18px;
+      left: 43px;
+      top: 80px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 18px;
+      text-align: center;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .top-nav {
+      position: absolute;
+      width: 136px;
+      height: 40px;
+      left: 278px;
+      top: 28px;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 8px;
+      z-index: 3;
+    }
+
+    .top-nav button {
+      position: absolute;
+      top: -2px;
+      width: 68px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .top-nav .active {
+      left: -2px;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      z-index: 1;
+    }
+
+    .top-nav button:not(.active) {
+      left: 68px;
+      background: transparent;
+      z-index: 2;
+    }
+
+    .card,
+    .hero-card {
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 16px;
+    }
+
+    .card {
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .card:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0 0 0 #100F0F;
+    }
+
+    .hero-card {
+      position: absolute;
+      width: 398px;
+      height: 134px;
+      left: 16px;
+      top: 118px;
+      z-index: 1;
+    }
+
+    .hero-title {
+      position: absolute;
+      width: 204px;
+      height: 34px;
+      left: 42px;
+      top: 150px;
+      font-weight: 600;
+      font-size: 34px;
+      line-height: 34px;
+      white-space: nowrap;
+      z-index: 4;
+    }
+
+    .hero-copy {
+      position: absolute;
+      width: 126px;
+      height: 18px;
+      left: 42px;
+      top: 202px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 18px;
+      white-space: nowrap;
+      z-index: 4;
+    }
+
+    .deco-arrow {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      left: 222px;
+      top: 190px;
+      object-fit: contain;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      display: block;
+      background: var(--yellow);
+      border: 1px solid var(--ink);
+      border-radius: 1px;
+      clip-path: polygon(50% 0%, 61% 36%, 100% 50%, 61% 64%, 50% 100%, 39% 64%, 0% 50%, 39% 36%);
+      z-index: 5;
+    }
+
+    .star-1 {
+      width: 12px;
+      height: 13px;
+      left: 168px;
+      top: 195px;
+      transform: rotate(11.45deg);
+    }
+
+    .star-2 {
+      width: 19px;
+      height: 20px;
+      left: 269px;
+      top: 130px;
+      transform: rotate(-13.59deg);
+    }
+
+    .star-3 {
+      width: 13px;
+      height: 14px;
+      left: 261px;
+      top: 153px;
+      transform: rotate(-1.32deg);
+    }
+
+    .hero-girl {
+      position: absolute;
+      width: 152px;
+      height: 195px;
+      left: 267px;
+      top: 105px;
+      object-fit: contain;
+      object-position: center;
+      z-index: 8;
+      pointer-events: none;
+    }
+
+    .entry-card {
+      position: absolute;
+      width: 191px;
+      height: 167px;
+      top: 268px;
+      z-index: 2;
+    }
+
+    .entry-card:nth-of-type(1) {
+      left: 16px;
+    }
+
+    .entry-card:nth-of-type(2) {
+      left: 223px;
+    }
+
+    .entry-icon {
+      position: absolute;
+      width: 129px;
+      height: 129px;
+      left: 31px;
+      top: 9px;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .entry-card h3 {
+      position: absolute;
+      width: 140px;
+      height: 20px;
+      left: 24px;
+      top: 123px;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 20px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .entry-decoration {
+      position: absolute;
+      object-fit: fill;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .entry-star-4 {
+      width: 14.41px;
+      height: 15.61px;
+      left: 50px;
+      top: 322px;
+      transform: rotate(-12.6deg);
+    }
+
+    .entry-line-3-left {
+      width: 17px;
+      height: 28.5px;
+      left: 157.75px;
+      top: 302.75px;
+    }
+
+    .entry-line-3-right {
+      width: 17px;
+      height: 28.5px;
+      left: 371px;
+      top: 308px;
+    }
+
+    .entry-line-4-right {
+      width: 12.26px;
+      height: 14.93px;
+      left: 254px;
+      top: 313px;
+      transform: matrix(-0.95, 0.31, 0.31, 0.95, 0, 0);
+    }
+
+    .hot-header {
+      position: absolute;
+      left: 16px;
+      top: 451px;
+      width: 398px;
+      height: 40px;
+      z-index: 2;
+    }
+
+    .hot-icon {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      left: 0;
+      top: 0;
+      object-fit: contain;
+    }
+
+    .hot-title {
+      position: absolute;
+      width: 80px;
+      height: 20px;
+      left: 39px;
+      top: 8px;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 20px;
+      white-space: nowrap;
+    }
+
+    .refresh-btn {
+      position: absolute;
+      width: 60px;
+      height: 18px;
+      left: 337px;
+      top: 10px;
+      z-index: 2;
+    }
+
+    .refresh-btn span {
+      position: absolute;
+      width: 42px;
+      height: 14px;
+      left: 0;
+      top: 1px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .refresh-btn img {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 44px;
+      top: 0;
+      object-fit: contain;
+    }
+
+    .interest-grid {
+      position: absolute;
+      width: 398px;
+      left: 16px;
+      top: 495px;
+      display: grid;
+      grid-template-columns: 122px 122px 122px;
+      gap: 16px;
+      z-index: 2;
+    }
+
+    .interest-card {
+      position: relative;
+      width: 122px;
+      height: 132px;
+      text-align: center;
+    }
+
+    .interest-card img {
+      position: absolute;
+      width: 88px;
+      height: 88px;
+      left: 17px;
+      top: 4px;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .interest-card h3 {
+      position: absolute;
+      width: 58px;
+      height: 14px;
+      left: 32px;
+      top: 85px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .tag {
+      position: absolute;
+      width: 40px;
+      height: 16px;
+      left: 41px;
+      top: 103px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--yellow);
+      border-radius: 3px;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 12px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .interest-card[data-tone="green"] .tag {
+      background: var(--green);
+    }
+
+    .interest-card[data-tone="blue"] .tag {
+      background: var(--blue);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 20;
+      width: max-content;
+      min-width: 78px;
+      max-width: 330px;
+      height: 30px;
+      padding: 0 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(16, 15, 15, 0.7);
+      border: 1px solid rgba(16, 15, 15, 0.7);
+      border-radius: 8px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 14px;
+      color: #FFFFFF;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 12px);
+      transition: opacity 200ms ease, transform 200ms ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 430px) {
+      .app {
+        transform: scale(calc(100vw / 430));
+      }
+
+      body {
+        height: calc(932px * (100vw / 430));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" aria-label="兴趣探索站首页">
+    <img class="deco-sparkles deco-sparkles-2" src="assets/deco-sparkles.png" alt="" aria-hidden="true">
+    <img class="deco-sparkles deco-sparkles-1" src="assets/deco-sparkles.png" alt="" aria-hidden="true">
+    <img class="sketch-line line-1" src="assets/line1.png" alt="" aria-hidden="true">
+    <h1 class="title">兴趣探索站</h1>
+    <p class="subtitle">适合打工人的低成本指南</p>
+
+    <nav class="top-nav" aria-label="顶部导航">
+      <button class="active" type="button" onclick="location.href='mine.html'">我的</button>
+      <button type="button" onclick="window.location.assign('explore.html')">广场</button>
+    </nav>
+
+    <section class="hero-card" aria-labelledby="hero-title"></section>
+    <img class="sketch-line line-2" src="assets/line2.png" alt="" aria-hidden="true">
+    <h2 id="hero-title" class="hero-title">低成本试兴趣</h2>
+    <p class="hero-copy">小成本，大快乐</p>
+    <img class="deco-arrow" src="assets/deco-arrow.png" alt="" aria-hidden="true">
+    <span class="star star-1" aria-hidden="true"></span>
+    <span class="star star-2" aria-hidden="true"></span>
+    <span class="star star-3" aria-hidden="true"></span>
+    <img class="hero-girl" src="assets/footer-girl.png" alt="" aria-hidden="true">
+
+    <section class="entry-grid" aria-label="主要入口">
+      <button class="card entry-card" type="button" onclick="location.href='quiz.html'">
+        <img class="entry-icon" src="assets/icon-test.png" alt="">
+        <h3>测一测适合什么</h3>
+      </button>
+      <button class="card entry-card" type="button" onclick="location.href='explore.html'">
+        <img class="entry-icon" src="assets/icon-compass.png" alt="">
+        <h3>探一探兴趣广场</h3>
+      </button>
+    </section>
+    <img class="entry-decoration entry-star-4" src="assets/star4.svg" alt="" aria-hidden="true">
+    <img class="entry-decoration entry-line-3-left" src="assets/line3.png" alt="" aria-hidden="true">
+    <img class="entry-decoration entry-line-4-right" src="assets/line4.png" alt="" aria-hidden="true">
+    <img class="entry-decoration entry-line-3-right" src="assets/line3.png" alt="" aria-hidden="true">
+
+    <section class="hot-header" aria-label="热门兴趣标题">
+      <img class="hot-icon" src="assets/icon-fire.png" alt="" aria-hidden="true">
+      <h2 class="hot-title">热门兴趣</h2>
+      <button class="refresh-btn" type="button" data-toast="换一批功能下一步接入">
+        <span>换一批</span>
+        <img src="assets/icon-refresh.png" alt="" aria-hidden="true">
+      </button>
+    </section>
+
+    <section class="interest-grid" aria-label="热门兴趣快捷入口">
+      <button class="card interest-card" type="button" data-interest="攀岩" data-tone="yellow">
+        <img src="assets/icon-climbing.png" alt="">
+        <h3>攀岩</h3>
+        <span class="tag">无氧</span>
+      </button>
+      <button class="card interest-card" type="button" data-interest="简笔画" data-tone="green">
+        <img src="assets/icon-painting.png" alt="">
+        <h3>简笔画</h3>
+        <span class="tag">绘画</span>
+      </button>
+      <button class="card interest-card" type="button" data-interest="拳击" data-tone="blue">
+        <img src="assets/icon-boxing.png" alt="">
+        <h3>拳击</h3>
+        <span class="tag">有氧</span>
+      </button>
+      <button class="card interest-card" type="button" data-interest="网球" data-tone="blue">
+        <img src="assets/icon-tennis.png" alt="">
+        <h3>网球</h3>
+        <span class="tag">有氧</span>
+      </button>
+      <button class="card interest-card" type="button" data-interest="Jazz" data-tone="yellow">
+        <img src="assets/icon-dance.png" alt="">
+        <h3>Jazz</h3>
+        <span class="tag">舞蹈</span>
+      </button>
+      <button class="card interest-card" type="button" data-interest="烘焙" data-tone="green">
+        <img src="assets/icon-baking.png" alt="">
+        <h3>烘焙</h3>
+        <span class="tag">手作</span>
+      </button>
+    </section>
+  </main>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const toast = document.querySelector(".toast");
+    let toastTimer;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1000);
+    }
+
+    document.querySelectorAll("[data-toast]").forEach((item) => {
+      item.addEventListener("click", () => showToast(item.dataset.toast));
+    });
+
+    document.querySelectorAll("[data-interest]").forEach((card) => {
+      card.addEventListener("click", () => {
+        showToast(`${card.dataset.interest}详情页下一步接入`);
+      });
+    });
+  </script>
+</body>
+</html>

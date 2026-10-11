@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FDF5EA">
+  <title>拳击详情</title>
+</head>
+<body>
+  <script>
+    window.DETAIL_DATA = {
+      name: "拳击",
+      category: "有氧",
+      toneClass: "blue",
+      icon: "assets/icon-boxing.png",
+      fund: "100-300元",
+      tags: ["室内", "有氧", "1h/次"],
+      timeline: [
+        { period: "第1周", action: "体验基础拳法", cost: "80-150元/次" },
+        { period: "第2-4周", action: "练组合拳和跳绳", cost: "100-180元/次" },
+        { period: "第1-3月", action: "提升体能和反应", cost: "月卡300-600元" }
+      ],
+      gear: {
+        low: { name: "手绷带", note: "保护手腕必备" },
+        pro: { name: "拳套+护齿", note: "长期训练再购买" }
+      },
+      resources: ["拳击入门动作", "新手体能训练", "训练避坑指南"],
+      place: { name: "拳击体验馆", price: "¥79起", distance: "3km" }
+    };
+  </script>
+  <script src="assets/detail-page-checkin-sync.js?v=resource-thumbs-v2"></script>
+</body>
+</html>

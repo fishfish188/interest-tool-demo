@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FDF5EA">
+  <title>创建兴趣</title>
+  <style>
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-400.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-500.ttf") format("truetype");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "JiangChengYuanTi";
+      src: url("assets/fonts/JiangChengYuanTi-600.ttf") format("truetype");
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --page: #FDF5EA;
+      --ink: #100F0F;
+      --yellow: #FCD611;
+      --green: #CDF12D;
+      --blue: #10D8FD;
+      --muted: #949494;
+      --card-border: 2px solid #100F0F;
+      --card-shadow: 2px 2px 0px #100F0F;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      background: var(--page);
+      color: var(--ink);
+      font-family: "JiangChengYuanTi", YouYuan, "幼圆", "Microsoft YaHei", sans-serif;
+      letter-spacing: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    button,
+    input,
+    select {
+      color: inherit;
+      font: inherit;
+      border: 0;
+      background: none;
+    }
+
+    button,
+    select {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .create-page {
+      position: relative;
+      width: 430px;
+      height: 1128px;
+      flex: 0 0 430px;
+      overflow: hidden;
+      transform-origin: top center;
+    }
+
+    .page-bg {
+      position: absolute;
+      width: 430px;
+      height: 932px;
+      left: 0;
+      top: 0;
+      background: linear-gradient(180deg, rgba(205, 241, 45, 0.7) 0%, #FDF5EA 100%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .back-link {
+      position: absolute;
+      left: 16px;
+      top: 28px;
+      width: 92px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 18px;
+      z-index: 2;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .back-link img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    .back-link span {
+      width: 36px;
+      height: 18px;
+      line-height: 18px;
+      text-align: center;
+    }
+
+    .page-title {
+      position: absolute;
+      width: 120px;
+      height: 30px;
+      left: 294px;
+      top: 33px;
+      font-weight: 600;
+      font-size: 30px;
+      line-height: 30px;
+      text-align: right;
+      z-index: 2;
+    }
+
+    .title-line {
+      position: absolute;
+      width: 120px;
+      height: 10px;
+      left: 294px;
+      top: 58px;
+      object-fit: fill;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .section-kicker {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 14px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      z-index: 2;
+    }
+
+    .section-kicker img {
+      width: 9px;
+      height: 8px;
+      object-fit: contain;
+    }
+
+    .basic-kicker {
+      left: 32px;
+      top: 88px;
+    }
+
+    .resource-kicker {
+      left: 32px;
+      top: 740px;
+    }
+
+    .panel {
+      position: absolute;
+      width: 398px;
+      left: 16px;
+      background: var(--page);
+      border-radius: 16px;
+      z-index: 1;
+    }
+
+    .basic-panel {
+      top: 112px;
+      height: 612px;
+    }
+
+    .resource-panel {
+      top: 764px;
+      height: 272px;
+    }
+
+    .field {
+      position: absolute;
+      left: 16px;
+      width: 366px;
+    }
+
+    .field-title {
+      height: 16px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+    }
+
+    .control {
+      position: absolute;
+      left: 0;
+      top: 26px;
+      width: 366px;
+      height: 42px;
+      padding: 13px 14px;
+      background: #FFFFFF;
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 12px;
+      outline: none;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .control::placeholder {
+      color: var(--muted);
+    }
+
+    .name-field {
+      top: 16px;
+      height: 68px;
+    }
+
+    .category-field {
+      top: 100px;
+      height: 58px;
+    }
+
+    .icon-field {
+      top: 172px;
+      height: 96px;
+    }
+
+    .color-field {
+      top: 284px;
+      height: 56px;
+    }
+
+    .tags-field {
+      top: 356px;
+      height: 68px;
+    }
+
+    .time-field {
+      top: 440px;
+      height: 68px;
+    }
+
+    .fund-field {
+      top: 524px;
+      height: 68px;
+    }
+
+    .chip-row,
+    .color-row {
+      position: absolute;
+      left: 0;
+      top: 26px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .choice-chip {
+      width: 56px;
+      height: 30px;
+      padding: 8px 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFFFFF;
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 12px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      white-space: nowrap;
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+
+    .choice-chip.is-active {
+      background: var(--yellow);
+    }
+
+    .custom-category {
+      position: absolute;
+      left: 264px;
+      top: 0;
+      width: 70px;
+      height: 30px;
+      padding: 0 0 4px;
+      border-bottom: 2px solid var(--ink);
+      border-radius: 0;
+      outline: none;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      background: transparent;
+    }
+
+    .custom-category::placeholder {
+      color: var(--ink);
+    }
+
+    .icon-row {
+      position: absolute;
+      left: 0;
+      top: 26px;
+      display: grid;
+      grid-template-columns: repeat(3, 72px);
+      gap: 12px;
+    }
+
+    .icon-option {
+      width: 72px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFFFFF;
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 12px;
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+
+    .icon-option.is-active {
+      background: var(--yellow);
+    }
+
+    .icon-option img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .default-icon {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .color-option {
+      width: 56px;
+      height: 30px;
+      background: var(--yellow);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 12px;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .color-option.green {
+      background: var(--green);
+    }
+
+    .color-option.blue {
+      background: var(--blue);
+    }
+
+    .color-option.is-active {
+      position: relative;
+    }
+
+    .color-option.is-active::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      left: 17px;
+      top: 4px;
+      background: url("assets/icon-check-line.svg") center / contain no-repeat;
+      pointer-events: none;
+    }
+
+    .time-trigger {
+      text-align: left;
+      background: #FFFFFF url("assets/icon-arrow-down-s-line.svg") right 12px top 9px / 24px 24px no-repeat;
+      color: var(--muted);
+    }
+
+    .time-trigger.has-value {
+      color: var(--ink);
+    }
+
+    .time-dropdown {
+      position: absolute;
+      width: 366px;
+      height: 152px;
+      left: 16px;
+      top: 518px;
+      display: none;
+      background: #FFFFFF;
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 12px;
+      z-index: 5;
+      overflow: hidden;
+    }
+
+    .fund-row {
+      position: absolute;
+      left: 0;
+      top: 26px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .fund-input {
+      width: 90px;
+      height: 42px;
+      padding: 13px 14px;
+      background: #FFFFFF;
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 12px;
+      outline: none;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      appearance: textfield;
+      -moz-appearance: textfield;
+    }
+
+    .fund-input::-webkit-outer-spin-button,
+    .fund-input::-webkit-inner-spin-button {
+      margin: 0;
+      -webkit-appearance: none;
+    }
+
+    .fund-input::placeholder {
+      color: var(--muted);
+    }
+
+    .fund-separator {
+      width: 15px;
+      height: 16px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+      text-align: center;
+    }
+
+    .time-dropdown.is-open {
+      display: block;
+    }
+
+    .time-option {
+      position: relative;
+      width: 366px;
+      height: 38px;
+      padding-left: 19px;
+      display: flex;
+      align-items: center;
+      background: transparent;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      text-align: left;
+    }
+
+    .time-option:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      width: 334px;
+      height: 0;
+      left: 16px;
+      bottom: 0;
+      border-top: 1px solid #E3E3E3;
+      border-radius: 1px;
+    }
+
+    .link-field {
+      position: absolute;
+      left: 16px;
+      width: 366px;
+      height: 68px;
+    }
+
+    .video-field {
+      top: 16px;
+    }
+
+    .article-field {
+      top: 100px;
+    }
+
+    .creator-field {
+      top: 184px;
+    }
+
+    .resource-input {
+      position: absolute;
+      left: 0;
+      top: 26px;
+      width: 366px;
+      height: 42px;
+      padding: 13px 14px;
+      background: #FFFFFF;
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 12px;
+      outline: none;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .resource-input::placeholder {
+      color: var(--muted);
+    }
+
+    .footer-actions {
+      position: absolute;
+      left: 32px;
+      top: 1056px;
+      display: grid;
+      grid-template-columns: repeat(2, 175px);
+      gap: 16px;
+      z-index: 2;
+    }
+
+    .footer-button {
+      width: 175px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--page);
+      border: var(--card-border);
+      box-shadow: var(--card-shadow);
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .footer-button.primary {
+      background: var(--yellow);
+    }
+
+    .back-link:active,
+    .choice-chip:active,
+    .icon-option:active,
+    .color-option:active,
+    .resource-input:active,
+    .footer-button:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0 0 0 #100F0F;
+    }
+
+    @media (max-width: 430px) {
+      .create-page {
+        transform: scale(calc(100vw / 430));
+      }
+
+      body {
+        height: calc(1128px * (100vw / 430));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="create-page" aria-label="创建兴趣">
+    <div class="page-bg" aria-hidden="true"></div>
+
+    <a class="back-link" href="mine.html">
+      <img src="assets/icon-arrow-left-s-line.svg" alt="" aria-hidden="true">
+      <span>返回</span>
+    </a>
+
+    <img class="title-line" src="assets/line2.png" alt="" aria-hidden="true">
+    <h1 class="page-title">创建兴趣</h1>
+
+    <div class="section-kicker basic-kicker">
+      <img src="assets/title-arrow.svg" alt="" aria-hidden="true">
+      <span>基本信息</span>
+    </div>
+
+    <form>
+      <section class="panel basic-panel" aria-label="基本信息表单">
+        <label class="field name-field">
+          <span class="field-title">兴趣名称</span>
+          <input class="control" type="text" name="name" placeholder="滑板、摄影、吉他...">
+        </label>
+
+        <section class="field category-field" aria-label="分类">
+          <h2 class="field-title">分类</h2>
+          <div class="chip-row">
+            <button class="choice-chip" type="button">无氧</button>
+            <button class="choice-chip" type="button">有氧</button>
+            <button class="choice-chip" type="button">手作</button>
+            <button class="choice-chip other-chip" type="button">其他</button>
+            <input class="custom-category" type="text" name="category_other" aria-label="自定义分类">
+          </div>
+        </section>
+
+        <section class="field icon-field" aria-label="图标">
+          <h2 class="field-title">图标</h2>
+          <div class="icon-row">
+            <button class="icon-option" type="button" aria-label="默认图标">
+              <img class="default-icon" src="assets/icon-test.png" alt="" aria-hidden="true">
+            </button>
+            <button class="icon-option" type="button" aria-label="用户图标">
+              <img src="assets/icon-user-smile-line.svg" alt="" aria-hidden="true">
+            </button>
+            <button class="icon-option" type="button" aria-label="添加图标">
+              <img src="assets/icon-add-line-gray.svg" alt="" aria-hidden="true">
+            </button>
+          </div>
+        </section>
+
+        <section class="field color-field" aria-label="颜色">
+          <h2 class="field-title">颜色</h2>
+          <div class="color-row">
+            <button class="color-option" type="button" aria-label="黄色"></button>
+            <button class="color-option green" type="button" aria-label="绿色"></button>
+            <button class="color-option blue" type="button" aria-label="蓝色"></button>
+          </div>
+        </section>
+
+        <label class="field tags-field">
+          <span class="field-title">标签（选填）</span>
+          <input class="control" type="text" name="tags" placeholder="治愈、低投入...">
+        </label>
+
+        <label class="field time-field">
+          <span class="field-title">时间投入</span>
+          <button class="control time-trigger" type="button" aria-expanded="false">请选择</button>
+          <input class="time-value" type="hidden" name="time">
+        </label>
+
+        <div class="time-dropdown" aria-label="时间投入选项">
+          <button class="time-option" type="button" data-value="&lt;1h/次">&lt;1h/次</button>
+          <button class="time-option" type="button" data-value="1-1.5h/次">1-1.5h/次</button>
+          <button class="time-option" type="button" data-value="1.5-2h/次">1.5-2h/次</button>
+          <button class="time-option" type="button" data-value=">2h/次">&gt;2h/次</button>
+        </div>
+
+        <label class="field fund-field">
+          <span class="field-title">启动资金</span>
+          <span class="fund-row">
+            <input class="fund-input" type="text" inputmode="numeric" name="fund_min" placeholder="请输入">
+            <span class="fund-separator">-</span>
+            <input class="fund-input" type="text" inputmode="numeric" name="fund_max" placeholder="请输入">
+          </span>
+        </label>
+      </section>
+
+      <div class="section-kicker resource-kicker">
+        <img src="assets/title-arrow.svg" alt="" aria-hidden="true">
+        <span>资源链接</span>
+      </div>
+
+      <section class="panel resource-panel" aria-label="资源链接表单">
+        <section class="link-field video-field" aria-label="视频教程">
+          <h2 class="field-title">视频教程</h2>
+          <input class="resource-input" type="url" name="video" placeholder="B站/抖音/小红书链接">
+        </section>
+
+        <section class="link-field article-field" aria-label="图文攻略">
+          <h2 class="field-title">图文教程</h2>
+          <input class="resource-input" type="url" name="article" placeholder="B站/抖音/小红书链接">
+        </section>
+
+        <section class="link-field creator-field" aria-label="推荐博主">
+          <h2 class="field-title">博主跟练</h2>
+          <input class="resource-input" type="url" name="creator" placeholder="B站/抖音/小红书链接">
+        </section>
+      </section>
+
+      <div class="footer-actions">
+        <button class="footer-button" type="button">加入清单</button>
+        <button class="footer-button primary" type="button">立即开始</button>
+      </div>
+    </form>
+  </main>
+  <script>
+    document.querySelectorAll(".choice-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        document.querySelectorAll(".choice-chip").forEach((item) => item.classList.remove("is-active"));
+        chip.classList.add("is-active");
+      });
+    });
+
+    document.querySelectorAll(".icon-option").forEach((option) => {
+      option.addEventListener("click", () => {
+        document.querySelectorAll(".icon-option").forEach((item) => item.classList.remove("is-active"));
+        option.classList.add("is-active");
+      });
+    });
+
+    document.querySelectorAll(".color-option").forEach((option) => {
+      option.addEventListener("click", () => {
+        document.querySelectorAll(".color-option").forEach((item) => item.classList.remove("is-active"));
+        option.classList.add("is-active");
+      });
+    });
+
+    const timeTrigger = document.querySelector(".time-trigger");
+    const timeDropdown = document.querySelector(".time-dropdown");
+    const timeValue = document.querySelector(".time-value");
+    const customCategory = document.querySelector(".custom-category");
+    const otherChip = document.querySelector(".other-chip");
+
+    otherChip.addEventListener("click", () => {
+      customCategory.focus();
+    });
+
+    timeTrigger.addEventListener("click", () => {
+      const isOpen = timeDropdown.classList.toggle("is-open");
+      timeTrigger.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.querySelectorAll(".time-option").forEach((option) => {
+      option.addEventListener("click", () => {
+        timeTrigger.textContent = option.dataset.value;
+        timeTrigger.classList.add("has-value");
+        timeTrigger.setAttribute("aria-expanded", "false");
+        timeValue.value = option.dataset.value;
+        timeDropdown.classList.remove("is-open");
+      });
+    });
+
+    function readSavedList() {
+      return JSON.parse(localStorage.getItem("interestSavedList") || "[]");
+    }
+
+    function writeSavedList(list) {
+      localStorage.setItem("interestSavedList", JSON.stringify(list));
+    }
+
+    function removeDeletedName(name) {
+      const deleted = JSON.parse(localStorage.getItem("interestDeletedNames") || "[]").filter((item) => item !== name);
+      localStorage.setItem("interestDeletedNames", JSON.stringify(deleted));
+    }
+
+    function getSelectedTone() {
+      const selected = document.querySelector(".color-option.is-active");
+      if (selected?.classList.contains("green")) return "green";
+      if (selected?.classList.contains("blue")) return "blue";
+      return "yellow";
+    }
+
+    function saveCustomInterest() {
+      const name = document.querySelector('input[name="name"]').value.trim() || "未命名兴趣";
+      const activeCategory = document.querySelector(".choice-chip.is-active");
+      const customText = customCategory.value.trim();
+      const category = customText || activeCategory?.textContent.trim() || "其他";
+      const tagInput = document.querySelector('input[name="tags"]').value.trim();
+      const tags = tagInput ? tagInput.split(/[、,，\s]+/).filter(Boolean).slice(0, 2) : [category];
+      const time = timeValue.value || "待定";
+      const minFund = document.querySelector('input[name="fund_min"]').value.trim();
+      const maxFund = document.querySelector('input[name="fund_max"]').value.trim();
+      const fund = minFund && maxFund ? `${minFund}-${maxFund}元` : "待补充";
+      const saved = readSavedList();
+      const payload = {
+        name,
+        category,
+        status: "try",
+        addedAt: Date.now(),
+        custom: true,
+        icon: "assets/icon-test.png",
+        tone: getSelectedTone(),
+        note: `启动资金：${fund}`,
+        tags: [...tags, time].slice(0, 3),
+        time
+      };
+      const existing = saved.find((item) => item.name === name);
+      if (existing) {
+        Object.assign(existing, payload);
+      } else {
+        saved.push(payload);
+      }
+      writeSavedList(saved);
+      removeDeletedName(name);
+      window.location.href = "mine.html";
+    }
+
+    document.querySelectorAll(".footer-button").forEach((button) => {
+      button.addEventListener("click", saveCustomInterest);
+    });
+  </script>
+</body>
+</html>
