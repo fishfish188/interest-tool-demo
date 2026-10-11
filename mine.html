@@ -541,10 +541,10 @@
 </head>
 <body>
   <main class="mine-page" aria-label="我的清单">
-    <img class="mine-bg" src="assets/bg.png" alt="" aria-hidden="true">
-    <img class="title-sparkles title-sparkles-left" src="assets/deco-sparkles.png" alt="" aria-hidden="true">
-    <img class="title-sparkles title-sparkles-right" src="assets/deco-sparkles.png" alt="" aria-hidden="true">
-    <img class="title-underline" src="assets/line1.png" alt="" aria-hidden="true">
+    <img class="mine-bg" src="assets/bg.webp" alt="" aria-hidden="true">
+    <img class="title-sparkles title-sparkles-left" src="assets/deco-sparkles.webp" alt="" aria-hidden="true">
+    <img class="title-sparkles title-sparkles-right" src="assets/deco-sparkles.webp" alt="" aria-hidden="true">
+    <img class="title-underline" src="assets/line1.webp" alt="" aria-hidden="true">
     <h1 class="brand-title">兴趣探索站</h1>
     <p class="brand-subtitle">适合打工人的低成本指南</p>
 
@@ -561,21 +561,21 @@
     <section class="status-row" aria-label="清单状态筛选">
       <button class="status-chip" type="button" data-status="try">
         <span class="status-bg" aria-hidden="true"></span>
-        <img class="status-icon" src="assets/try-icon.png" alt="" aria-hidden="true">
+        <img class="status-icon" src="assets/try-icon.webp" alt="" aria-hidden="true">
         <span class="status-board" aria-hidden="true"></span>
         <span class="status-name">想尝试</span>
         <span class="status-count">1</span>
       </button>
       <button class="status-chip" type="button" data-status="ing">
         <span class="status-bg" aria-hidden="true"></span>
-        <img class="status-icon" src="assets/ing-icon.png" alt="" aria-hidden="true">
+        <img class="status-icon" src="assets/ing-icon.webp" alt="" aria-hidden="true">
         <span class="status-board" aria-hidden="true"></span>
         <span class="status-name">进行中</span>
         <span class="status-count">1</span>
       </button>
       <button class="status-chip" type="button" data-status="giveup">
         <span class="status-bg" aria-hidden="true"></span>
-        <img class="status-icon" src="assets/giveup-icon.png" alt="" aria-hidden="true">
+        <img class="status-icon" src="assets/giveup-icon.webp" alt="" aria-hidden="true">
         <span class="status-board" aria-hidden="true"></span>
         <span class="status-name">已放弃</span>
         <span class="status-count">1</span>
@@ -584,7 +584,7 @@
 
     <section class="saved-list" aria-label="我的兴趣列表">
       <article class="saved-card" data-name="简笔画" data-status="try" data-tone="green">
-        <img class="saved-icon" src="assets/icon-painting.png" alt="" aria-hidden="true">
+        <img class="saved-icon" src="assets/icon-painting.webp" alt="" aria-hidden="true">
         <div class="saved-title-row">
           <h3 class="saved-title">简笔画</h3>
           <span class="saved-status">想尝试</span>
@@ -602,7 +602,7 @@
       </article>
 
       <article class="saved-card" data-name="攀岩" data-status="ing" data-tone="yellow">
-        <img class="saved-icon" src="assets/icon-climbing.png" alt="" aria-hidden="true">
+        <img class="saved-icon" src="assets/icon-climbing.webp" alt="" aria-hidden="true">
         <div class="saved-title-row">
           <h3 class="saved-title">攀岩</h3>
           <span class="saved-status green">进行中</span>
@@ -620,7 +620,7 @@
       </article>
 
       <article class="saved-card" data-name="拳击" data-status="giveup" data-tone="blue">
-        <img class="saved-icon" src="assets/icon-boxing.png" alt="" aria-hidden="true">
+        <img class="saved-icon" src="assets/icon-boxing.webp" alt="" aria-hidden="true">
         <div class="saved-title-row">
           <h3 class="saved-title">拳击</h3>
           <span class="saved-status blue">已放弃</span>
@@ -645,7 +645,7 @@
     const savedList = document.querySelector(".saved-list");
     const interestMeta = {
       "攀岩": {
-        icon: "assets/icon-climbing.png",
+        icon: "assets/icon-climbing.webp",
         detail: "detail-climbing.html",
         tone: "yellow",
         note: "启动资金：0-100元",
@@ -653,42 +653,42 @@
         tags: ["室内/户外", "无氧", "1-1.5h/次"]
       },
       "简笔画": {
-        icon: "assets/icon-painting.png",
+        icon: "assets/icon-painting.webp",
         detail: "detail-painting.html",
         tone: "green",
         note: "启动资金：0-50元",
         tags: ["室内", "绘画", "1h/次"]
       },
       "网球": {
-        icon: "assets/icon-tennis.png",
+        icon: "assets/icon-tennis.webp",
         detail: "detail-tennis.html",
         tone: "blue",
         note: "启动资金：200-500元",
         tags: ["室外", "有氧", "1-1.5h/次"]
       },
       "皮克球": {
-        icon: "assets/icon-pickleball.png",
+        icon: "assets/icon-pickleball.webp",
         detail: "detail-pickleball.html",
         tone: "yellow",
         note: "启动资金：100-300元",
         tags: ["室内/户外", "有氧", "1h/次"]
       },
       "烘焙": {
-        icon: "assets/icon-baking.png",
+        icon: "assets/icon-baking.webp",
         detail: "detail-baking.html",
         tone: "green",
         note: "启动资金：100-300元",
         tags: ["室内", "手作", "1.5h/次"]
       },
       "拳击": {
-        icon: "assets/icon-boxing.png",
+        icon: "assets/icon-boxing.webp",
         detail: "detail-boxing.html",
         tone: "blue",
         note: "启动资金：100-300元",
         tags: ["室内", "有氧", "1h/次"]
       },
       "Jazz": {
-        icon: "assets/icon-dance.png",
+        icon: "assets/icon-dance.webp",
         detail: "detail-jazz.html",
         tone: "yellow",
         note: "启动资金：100-300元",
@@ -721,7 +721,7 @@
 
     function getItemMeta(item) {
       return interestMeta[item.name] || {
-        icon: item.icon || "assets/icon-test.png",
+        icon: item.icon || "assets/icon-test.webp",
         detail: item.detail || "#",
         tone: item.tone || "yellow",
         note: item.note || "启动资金：待补充",
