@@ -88,7 +88,6 @@
 
     .explore-page {
       position: relative;
-      top: 10px;
       width: 430px;
       height: 1450px;
       flex: 0 0 430px;
@@ -96,12 +95,16 @@
       transform-origin: top center;
     }
 
+    .explore-page > :not(.explore-bg) {
+      translate: 0 10px;
+    }
+
     .explore-bg {
       position: absolute;
       width: 430px;
       height: 185px;
       left: 0;
-      top: -10px;
+      top: 0;
       object-fit: cover;
       z-index: 0;
       pointer-events: none;
