@@ -242,8 +242,9 @@
     a { color: inherit; text-decoration: none; }
     img { display: block; user-select: none; -webkit-user-drag: none; }
     .detail-page { position: relative; width: 430px; height: var(--detail-height, 1534px); flex: 0 0 430px; overflow: hidden; transform-origin: top center; }
+    .detail-page > :not(.page-bg):not(.record-overlay):not(.back-link) { translate: 0 22px; }
     .page-bg { position: absolute; width: 430px; height: 932px; left: 0; top: 0; background: linear-gradient(180deg, rgba(205, 241, 45, 0.5) 0%, #FDF5EA 60%); pointer-events: none; z-index: 0; }
-    .back-link { position: absolute; left: 16px; top: 28px; width: 92px; height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--page); border: var(--card-border); box-shadow: var(--card-shadow); border-radius: 8px; font-weight: 500; font-size: 18px; line-height: 18px; z-index: 3; transition: transform 120ms ease, box-shadow 120ms ease; }
+    .back-link { position: absolute; left: 16px; top: 50px; width: 92px; height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--page); border: var(--card-border); box-shadow: var(--card-shadow); border-radius: 8px; font-weight: 500; font-size: 18px; line-height: 18px; z-index: 3; transition: transform 120ms ease, box-shadow 120ms ease; }
     .back-link img { width: 20px; height: 20px; object-fit: contain; }
     .intro-card { position: absolute; left: 16px; top: 88px; width: 398px; height: 138px; background: var(--page); border: var(--card-border); box-shadow: var(--card-shadow); border-radius: 16px; z-index: 1; }
     .intro-icon { position: absolute; width: 139px; height: 139px; left: -10px; top: -1px; object-fit: contain; }
